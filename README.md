@@ -1,1 +1,1 @@
-# netro-mentoring
+Artem Mentoring program.
