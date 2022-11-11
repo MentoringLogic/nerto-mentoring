@@ -1,0 +1,5 @@
+C:\Users\artem\source\repos\Work1\Work1\obj\Debug\net6.0\Work1.csproj.AssemblyReference.cache
+C:\Users\artem\source\repos\Work1\Work1\obj\Debug\net6.0\Work1.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\artem\source\repos\Work1\Work1\obj\Debug\net6.0\Work1.AssemblyInfoInputs.cache
+C:\Users\artem\source\repos\Work1\Work1\obj\Debug\net6.0\Work1.AssemblyInfo.cs
+C:\Users\artem\source\repos\Work1\Work1\obj\Debug\net6.0\Work1.csproj.CoreCompileInputs.cache
