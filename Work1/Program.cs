@@ -7,15 +7,7 @@ namespace SeaBattle
     class Program {
         static void Main()
         {
-            BattleShip MyBattleShip = new BattleShip();
-            Sea MySea = new Sea();
-
-            void AddShipToList()
-            {
-                
-                //ShipsAdd;
-
-            }
+            Console.WriteLine("I compiled");
         }
     }
 }
