@@ -23,8 +23,8 @@ namespace SeaBattle
             
             public  void Create()
             {
-
-                //if (X > 10 && y > 10)
+                //will finish this IF parts tommorow. 
+                //if ( > 10 &&  > 10)
                 //{
                 //}
 
