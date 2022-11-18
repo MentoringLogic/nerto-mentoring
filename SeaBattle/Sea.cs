@@ -15,10 +15,6 @@ namespace SeaBattle
         int SeaWidth;
         int SeaLenght;
 
-        public Sea()
-        {
-            var Ships = new List<BaseShip>();
-        }
 
 
         public void Create()
