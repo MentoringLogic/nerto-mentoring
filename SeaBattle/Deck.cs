@@ -12,5 +12,5 @@ namespace SeaBattle
         public Point Location;
         // State for decks true = Onfloat, false = Sank 
         public bool State { get; set; } = true;
-    }-
+    }
 }

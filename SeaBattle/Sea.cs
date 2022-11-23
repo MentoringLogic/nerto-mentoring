@@ -12,28 +12,12 @@ namespace SeaBattle
 {
     public class Sea
     {
-        private List<BaseShip> Ships { get; set; }
+        public List<BaseShip> Ships { get; set; }
         public int SeaWidth;
         public int SeaHeight;
 
-        // This function adds s1(BaseShip) to the Sea
-        // Checking if Point is available 
-        // Checking if Point within Sea borders
-        public void AddShip(BaseShip s1)
-        {
-            for (int i = 0; i < Ships.Count; i++)
-            {
-                for (int j = 0; j < Ships[i].Decks.Count; j++)
-                {
-                    if (s1.Decks[i].Location.X < SeaWidth && s1.Decks[i].Location.Y < SeaHeight && s1.Decks[i].Location.X > 0 && s1.Decks[i].Location.Y > 0) ;
+        
 
-                    
-                }
-
-            }
-
-            Ships.Add(s1);
-        }
         // Property to provide indexer
         public BaseShip this[int i]
         {
