@@ -16,7 +16,7 @@ namespace SeaBattle
         }   
         
         // Method Shoot is not implmented yet
-        void Shoot() {
+        public void Shoot() {
             throw new NotImplementedException("Method shoot not implemented yet");
         }
 

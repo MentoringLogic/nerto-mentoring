@@ -15,7 +15,7 @@ namespace SeaBattle
         }
         
         // Method Repair is not implmented yet
-        void Repair()
+        public void Repair()
         {
             throw new NotImplementedException("Method repair not implemented yet");
         }

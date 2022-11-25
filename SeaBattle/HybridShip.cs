@@ -15,11 +15,11 @@ namespace SeaBattle
         }
 
         // Method Repair is not implmented yet
-        void Repair() {
+        public void Repair() {
             throw new NotImplementedException("Method repair not implemented yet");
         }
         // Method Shoot is not implmented yet
-        void Shoot() {
+        public void Shoot() {
             throw new NotImplementedException("Method shoot not implemented yet");
         }
     }
