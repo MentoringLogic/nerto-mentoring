@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Drawing;
 using System.Security.Cryptography;
+using System.Xml.Linq;
 
 namespace SeaBattle
 {
@@ -38,12 +39,13 @@ namespace SeaBattle
         }
         public override string ToString()
         {
-            string output = "Height: " + SeaHeight + ", ";
-            output += "Width: " + SeaWidth + ", ";
-            output += "Ships: ";
+            StringBuilder output = new StringBuilder("Height: ", 25);
+            output.Append(SeaHeight + ", ");
+            output.Append("Width: " + SeaWidth + ", ");
+            output.Append("Ships: ");
             foreach (var s in Ships)
-                output += s.ToString();
-            return output;
+                output.Append(s.ToString());
+            return output.ToString();
         }
     }
 }

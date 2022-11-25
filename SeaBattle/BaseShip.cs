@@ -36,26 +36,26 @@ namespace SeaBattle
         }
         public override string ToString()
         {
-            StringBuilder myString = new StringBuilder ("Name: ", 25);
-            myString.Append (Name + ", ");
-            myString.Append("Type: " + this.GetType() + ", ");
-            myString.Append("Durability: " + Durability + ", ");
-            myString.Append("Speed: " + Speed + ", ");
-            myString.Append("Decks:" + Decks.Count + ", ");
-            myString.Append("Coordinates: ");
+            StringBuilder output = new StringBuilder ("Name: ", 25);
+            output.Append (Name + ", ");
+            output.Append("Type: " + this.GetType() + ", ");
+            output.Append("Durability: " + Durability + ", ");
+            output.Append("Speed: " + Speed + ", ");
+            output.Append("Decks:" + Decks.Count + ", ");
+            output.Append("Coordinates: ");
             foreach (var deck in Decks)
             {
-                myString.Append(deck.Location.X + ":" + deck.Location.Y + ", ");
+                output.Append(deck.Location.X + ":" + deck.Location.Y + ", ");
             }
-            return myString.ToString();
+            return output.ToString();
         }
         public static bool operator== (BaseShip s1, BaseShip s2)
         {
-            return ((s1.Decks.Count == s2.Decks.Count) && (s1.GetType() == s2.GetType()));
+            return ((s1.Decks.Count.Equals(s2.Decks.Count)) && (s1.GetType().Equals(s2.GetType())));
         }
         public static bool operator!= (BaseShip s1, BaseShip s2)
         {  
-            return !((s1.Decks.Count == s2.Decks.Count) && (s1.GetType() == s2.GetType()));
+            return !((s1.Decks.Count.Equals(s2.Decks.Count)) && (s1.GetType().Equals(s2.GetType())));
 
         }
         public bool Equals (BaseShip s1)
