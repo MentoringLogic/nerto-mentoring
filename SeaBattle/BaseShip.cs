@@ -10,18 +10,19 @@ using System.Drawing;
 using System.Reflection;
 using System.Xml.Linq;
 using System.Data.SqlTypes;
+using System.Runtime.CompilerServices;
 
 namespace SeaBattle
 {
     public class BaseShip
     { 
         public List<Deck> Decks { get; set; }
-        int Durability { get; set; }
-        int MoveSpeed { get; set; }
-        int MoveDirectionX { get; set; }
-        int MoveDirectionY { get; set; }
-        string Name { get; set; }
-        int Speed { get; set; }
+        private int Durability { get; set; }
+        private int MoveSpeed { get; set; }
+        private int MoveDirectionX { get; set; }
+        private int MoveDirectionY { get; set; }
+        private string Name { get; set; }
+        private int Speed { get; set; }
         
         public BaseShip(string Name, List<Point> points) {
             var Decks = new List<Deck>();
@@ -35,17 +36,18 @@ namespace SeaBattle
         }
         public override string ToString()
         {
-            string output = "Name: " + Name + ", ";
-            output += "Type: " + this.GetType() + ", ";
-            output += "Durability: " + Durability + ", ";
-            output += "Speed: " + Speed + ", ";
-            output += "Decks:" + Decks.Count + ", ";
-            output += "Coordinates: ";
+            StringBuilder myString = new StringBuilder ("Name: ", 25);
+            myString.Append (Name + ", ");
+            myString.Append("Type: " + this.GetType() + ", ");
+            myString.Append("Durability: " + Durability + ", ");
+            myString.Append("Speed: " + Speed + ", ");
+            myString.Append("Decks:" + Decks.Count + ", ");
+            myString.Append("Coordinates: ");
             foreach (var deck in Decks)
             {
-                output +=  deck.Location.X + ":" + deck.Location.Y + ", ";
+                myString.Append(deck.Location.X + ":" + deck.Location.Y + ", ");
             }
-            return output;
+            return myString.ToString();
         }
         public static bool operator== (BaseShip s1, BaseShip s2)
         {
@@ -56,28 +58,28 @@ namespace SeaBattle
             return !((s1.Decks.Count == s2.Decks.Count) && (s1.GetType() == s2.GetType()));
 
         }
+        public bool Equals (BaseShip s1)
+        {
+            return ((this.Decks.Count == s1.Decks.Count) && (this.GetType() == s1.GetType()));
+
+        }
 
         // This function adds s1(BaseShip) to the Sea
         // 1. + Checking if Point within Sea borders
         // 2. + Checking if Point is available 
-        
         public void AddShip(BaseShip s1, Sea PlaceSea)
         {
-
             foreach (var d in s1.Decks)
             {
                 if (d.Location.X > PlaceSea.SeaWidth || d.Location.Y > PlaceSea.SeaHeight || d.Location.X < 0 || d.Location.Y < 0)
 
                     throw new Exception("Ship can not exsist with this Sea borders");
             }
-
             if (ShipSpaceCheck(s1.Decks, PlaceSea))
             {
                 PlaceSea.Ships.Add(s1);
             }
-
         }
-
 
         // To do in the MoveTo method  
         // 1. + calculating mid-ship coordinates of current position
@@ -112,12 +114,10 @@ namespace SeaBattle
             float TravelY = (float) Math.Pow((midShipY - midNewY), 2);
             float TravelDistance;
             TravelDistance = (float) Math.Sqrt(TravelX + TravelY);
-
             if (Speed < TravelDistance)
             {
                 throw new Exception("Ship speed lower then distance");
             }
-
             if (ShipSpaceCheck(NewPosition, Sea1))
             {
                 for(int i = 0; i < NewPosition.Count; i++)
@@ -126,7 +126,6 @@ namespace SeaBattle
                     Decks[i].Location.Y = NewPosition[i].Location.Y;
                 }
             }
-            
         }
         public bool ShipSpaceCheck(List<Deck> myDecks, Sea CheckSea)
         {

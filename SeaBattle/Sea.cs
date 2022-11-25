@@ -16,8 +16,6 @@ namespace SeaBattle
         public int SeaWidth;
         public int SeaHeight;
 
-        
-
         // Property to provide indexer
         public BaseShip this[int i]
         {
@@ -38,7 +36,6 @@ namespace SeaBattle
                     throw new Exception("Unable to add ship to the list");
             }
         }
-
         public override string ToString()
         {
             string output = "Height: " + SeaHeight + ", ";
