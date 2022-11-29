@@ -13,10 +13,10 @@ namespace SeaBattle
         private int MoveDirectionY { get; set; }
         private string Name { get; set; }
         private int Speed { get; set; }
-        public BaseShip(string Name, List<Point> points)
+        public BaseShip(string ShipName, List<Point> points)
         {
             Decks = new List<Deck>();
-
+            Name = ShipName;
             for (int i = 0; i < points.Count - 1; i++)
             {
                 Deck a = new Deck();

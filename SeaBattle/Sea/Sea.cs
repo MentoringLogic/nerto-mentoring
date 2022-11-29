@@ -6,9 +6,15 @@ namespace SeaBattle
 {
     public class Sea
     {
-        public List<BaseShip> Ships { get; set; }
+        private List<BaseShip> Ships { get; set; }
         public int SeaWidth;
         public int SeaHeight;
+        public Sea(int x, int y)
+        {
+            SeaWidth= x;
+            SeaHeight= y;
+            Ships = new List<BaseShip>();
+        }
 
         // Property to provide indexer
         public BaseShip this[int i]
