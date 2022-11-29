@@ -89,7 +89,7 @@ namespace SeaBattle
             float TravelY = (float)Math.Pow(midShipY - midNewY, 2);
             float TravelDistance;
             TravelDistance = (float)Math.Sqrt(TravelX + TravelY);
-            if (Speed < TravelDistance)
+            if (Speed > TravelDistance)
             {
                 throw new Exception("Ship speed lower then distance");
             }
