@@ -7,14 +7,12 @@ namespace SeaBattle
     public class BaseShip
     {
         public List<Deck> Decks { get; set; }
-        private int Durability { get; set; }
-        private int MoveSpeed { get; set; }
-        private int MoveDirectionX { get; set; }
-        private int MoveDirectionY { get; set; }
+        public int Durability { get; set; }
         private string Name { get; set; }
-        private int Speed { get; set; }
+        public int Speed { get; set; }
         public BaseShip(string ShipName, List<Point> points)
         {
+            
             Decks = new List<Deck>();
             Name = ShipName;
             for (int i = 0; i < points.Count - 1; i++)
@@ -63,7 +61,7 @@ namespace SeaBattle
         // 4. + checking if speed is enough to get to new position
         // 5. + checking if new position is available
         // 6. + updating current position with new position
-        public void MoveTo(List<Deck> NewPosition, Sea Sea1)
+        public void MoveTo(List<Point> NewPosition, Sea Sea1)
         {
             float midShipX = 0;
             float midShipY = 0;
@@ -79,8 +77,8 @@ namespace SeaBattle
             float midNewY = 0;
             foreach (var p in NewPosition)
             {
-                midNewX += p.Location.X;
-                midNewY += p.Location.Y;
+                midNewX += p.X;
+                midNewY += p.Y;
             }
             midNewX /= NewPosition.Count;
             midNewY /= NewPosition.Count;
@@ -91,14 +89,14 @@ namespace SeaBattle
             TravelDistance = (float)Math.Sqrt(TravelX + TravelY);
             if (Speed > TravelDistance)
             {
-                throw new Exception("Ship speed lower then distance");
+                throw new Exception("Speed can be lower than TraveDistance");
             }
             if(Sea1.ShipSpaceCheck(NewPosition))
             {
                 for (int i = 0; i < NewPosition.Count; i++)
                 {
-                    Decks[i].Location.X = NewPosition[i].Location.X;
-                    Decks[i].Location.Y = NewPosition[i].Location.Y;
+                    Decks[i].Location.X = NewPosition[i].X;
+                    Decks[i].Location.Y = NewPosition[i].Y;
                 }
             }
         }
