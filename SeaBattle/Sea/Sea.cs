@@ -11,8 +11,8 @@ namespace SeaBattle
         public int SeaHeight;
         public Sea(int x, int y)
         {
-            SeaWidth= x;
-            SeaHeight= y;
+            SeaWidth = x;
+            SeaHeight = y;
             Ships = new List<BaseShip>();
         }
 
@@ -42,31 +42,39 @@ namespace SeaBattle
         // 2. + Checking if Point is available 
         public void AddShip(BaseShip s1)
         {
+            List<Point> NewLocations = new List<Point>();
             foreach (var deck in s1.Decks)
             {
-                if (deck.Location.X > SeaWidth || deck.Location.Y > SeaHeight || deck.Location.X < 0 || deck.Location.Y < 0)
+                NewLocations.Add(new Point(deck.Location.X, deck.Location.Y));
+
+                if (deck.Location.X > SeaWidth || deck.Location.Y > SeaHeight || deck.Location.X <= 0 || deck.Location.Y <= 0)
 
                     throw new Exception("Ship can not exsist with this Sea borders");
             }
-            if (ShipSpaceCheck(s1.Decks))
-            {
+
+            if (ShipSpaceCheck(NewLocations))
+
                 Ships.Add(s1);
-            }
+
         }
-        public bool ShipSpaceCheck(List<Deck> myDecks)
+        public bool ShipSpaceCheck(List<Point> DecksPoints)
         {
-            foreach (var deck in myDecks)
+            foreach (var deck in DecksPoints)
             {
                 foreach (var ship in Ships)
                 {
                     foreach (var point in ship.Decks)
                     {
                         // If this true - point is occupied so thats why it returns false 
-                        if (deck.Location.X == point.Location.X && deck.Location.Y == point.Location.Y)
+                        if (deck.X == point.Location.X || deck.Y == point.Location.Y)
+
                             return false;
+                        else
+                            return true;
                     }
                 }
             }
+
             return true;
         }
         public override string ToString()
