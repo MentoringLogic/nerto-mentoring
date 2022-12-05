@@ -45,7 +45,6 @@ namespace SeaBattle
             if (ReferenceEquals(s2, null))
                 return false;
             return s1.Equals(s2);
-            //return s1.Decks.Count == s2.Decks.Count && s1.GetType() == s2.GetType();
         }
         public static bool operator != (BaseShip s1, BaseShip s2) => !(s1 == s2);
         public bool Equals(BaseShip thisShip)
@@ -55,16 +54,8 @@ namespace SeaBattle
             if (ReferenceEquals(this, thisShip)) 
                 return true;
             return Decks.Count.Equals(thisShip.Decks.Count) && GetType().Equals(thisShip.GetType());
-            //return !(s1.Decks.Count == s2.Decks.Count && s1.GetType() == s2.GetType());
         }
         public override bool Equals(object s1) => Equals(s1 as BaseShip);
-        //{
-          //  return Decks.Count == s1.Decks.Count && GetType() == s1.GetType();
-
-        //}
-
-
-
         // To do in the MoveTo method  
         // 1. + calculating mid-ship coordinates of current position
         // 2. + calculating mid-ship coordinates of new position
