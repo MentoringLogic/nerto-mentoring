@@ -77,10 +77,10 @@ namespace SeaBattleTest
         public void Ships_AreEqual_true()
         {
             //arrange
-            List<Point> HybrydCoords = new List<Point>(new Point[] { new Point(4, 3), new Point(4, 4), new Point(4, 5), new Point(4, 6) });
-            BattleShip warr = new BattleShip("Tendari", HybrydCoords);
-            List<Point> WarCoords = new List<Point>(new Point[] { new Point(7, 5), new Point(7, 6), new Point(7, 7), new Point(7, 8) });
-            BattleShip warrior = new BattleShip("Warr", WarCoords);
+            List<Point> WarrCoords = new List<Point>(new Point[] { new Point(4, 3), new Point(4, 4), new Point(4, 5), new Point(4, 6) });
+            BattleShip warr = new BattleShip("Tendari", WarrCoords);
+            List<Point> WarriorCoords = new List<Point>(new Point[] { new Point(7, 5), new Point(7, 6), new Point(7, 7), new Point(7, 8) });
+            BattleShip warrior = new BattleShip("Warr", WarriorCoords);
             //act and assert
             warr.Should().Be(warrior);
         }
