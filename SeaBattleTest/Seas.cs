@@ -1,8 +1,7 @@
 using SeaBattle;
 using FluentAssertions;
 using System.Drawing;
-using System.Data.Common;
-using System.Runtime.CompilerServices;
+using System.Threading;
 
 namespace SeaBattleTest
 {
@@ -10,31 +9,31 @@ namespace SeaBattleTest
     public class Seas
     {  
         [TestMethod]
-        public void AddShip_DontAddShip_ifShipOutOfBorders()
+        public void AddShip_ShipOutOfBorders_ThrowException()
         {
             //arrange
             Sea sea = new Sea(10, 10);
             List<Point> Coords = new List<Point>(new Point[] { new Point(-2, 1), new Point(-2, 2), new Point(-2, 3) });
             BattleShip warship = new BattleShip("Tendari", Coords);
             //act
-
+            Action Act = () => sea.AddShip(warship);
             //assert
-            sea.Invoking(sea => sea.AddShip(warship)).Should().Throw<Exception>().WithMessage("Ship can not exsist with this Sea borders");
+            Act.Should().Throw<Exception>().WithMessage("Ship can not exsist with this Sea borders");
         }
         [TestMethod]
-        public void AddShip_DontAddShip_ifShipOnBorders()
+        public void AddShip_ShipOnBorders_ThrowException()
         {
             //arrange
             Sea sea = new Sea(10, 10);
             List<Point> Coords = new List<Point>(new Point[] { new Point(0, 0), new Point(0, 1), new Point(0, 2) });
             HybridShip hybrydo = new HybridShip("Colossus", Coords);
             //act
-
+            Action Act = () => sea.AddShip(hybrydo);
             //assert
-            sea.Invoking(sea => sea.AddShip(hybrydo)).Should().Throw<Exception>().WithMessage("Ship can not exsist with this Sea borders");
+            Act.Should().Throw<Exception>().WithMessage("Ship can not exsist with this Sea borders");
         }
         [TestMethod]
-        public void Indexer_GetFirstElement_byIndexer()
+        public void Indexer_GetFirstElement_ShipByIndex()
         {
             //arrange
             Sea sea = new Sea(10, 10);
@@ -43,12 +42,11 @@ namespace SeaBattleTest
             //act
             sea.AddShip(hybrydo);
             //assert 
-
             hybrydo.Should().Be(sea[0]);
         }
 
         [TestMethod]
-        public void Indexer_IfiLowerThan0_byIndexer()
+        public void Indexer_IfiLowerThan0_throwException()
         {
             //arrange
             Sea sea = new Sea(10, 10);
@@ -57,11 +55,10 @@ namespace SeaBattleTest
             //act
             sea.AddShip(hybrydo);
             //assert
-
             sea.Invoking(sea => sea[-1]).Should().Throw<IndexOutOfRangeException>();
-        }
+        }   
         [TestMethod]
-        public void Indexer_GetNotExsisting_byIndexer()
+        public void Indexer_GetNotExsisting_throwException()
         {
             //arrange
             Sea sea = new Sea(10, 10);
@@ -76,7 +73,7 @@ namespace SeaBattleTest
             sea.Invoking(sea => sea[2]).Should().Throw<IndexOutOfRangeException>();
         }
         [TestMethod]
-        public void toString_ToStringWorks_good()
+        public void toString_10x10Sea_PrintCorrectSeaDescriptionToConsole()
         {
             //arrange
             Sea sea = new Sea(10, 10);
