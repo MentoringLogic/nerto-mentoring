@@ -94,7 +94,7 @@ namespace SeaBattleTest
             List<Point> WarCoords = new List<Point>(new Point[] { new Point(7, 5), new Point(7, 6), new Point(7, 7) });
             BattleShip warrior = new BattleShip("Kalipso", WarCoords);
             //act and assert
-            warrior.Should().NotBe(hybrydo);
+            hybrydo.Should().NotBe(warrior);
         }
     }
 
