@@ -12,7 +12,6 @@ namespace SeaBattle
         public int Speed { get; set; }
         public BaseShip(string ShipName, List<Point> points)
         {
-
             Decks = new List<Deck>();
             Name = ShipName;
             for (int i = 0; i < points.Count - 1; i++)
@@ -89,7 +88,7 @@ namespace SeaBattle
             TravelDistance = (float)Math.Sqrt(TravelX + TravelY);
             if (Speed > TravelDistance)
             {
-                throw new Exception("Speed can be lower than TraveDistance");
+                throw new ArgumentOutOfRangeException();
             }
             if (Sea1.ShipSpaceCheck(NewPosition))
             {
