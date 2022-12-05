@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Linq;
 using System.Drawing;
 namespace SeaBattle
 {
@@ -57,24 +58,20 @@ namespace SeaBattle
                 Ships.Add(s1);
   
         }
+
         public bool ShipSpaceCheck(List<Point> DecksPoints)
         {
-            foreach (var deck in DecksPoints)
+            foreach (var (deck, point) in from deck in DecksPoints
+                                          from ship in Ships
+                                          from point in ship.Decks
+                                          select (deck, point))
             {
-                foreach (var ship in Ships)
-                {
-                    foreach (var point in ship.Decks)
-                    {
-                        // If this true - point is occupied so thats why it returns false 
-                        if (deck.X == point.Location.X || deck.Y == point.Location.Y)
-
-                            return false;
-                        else 
-                            return true;
-                    }
-                }
+                // If this true - point is occupied so thats why it returns false 
+                if (deck.X == point.Location.X || deck.Y == point.Location.Y)
+                    return false;
+                else
+                    return true;
             }
-           
             return true;
         }
         public override string ToString()
