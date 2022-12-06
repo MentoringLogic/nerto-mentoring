@@ -10,12 +10,10 @@ namespace SeaBattle
         {
 
         }
-
         // Method Shoot is not implmented yet
         public void Shoot()
         {
             throw new NotImplementedException("Method shoot not implemented yet");
         }
-
     }
 }

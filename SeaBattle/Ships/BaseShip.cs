@@ -12,8 +12,13 @@ namespace SeaBattle
         public int Speed { get; set; }
         public BaseShip(string ShipName, List<Point> points)
         {
+            Speed = 5;
             Decks = new List<Deck>();
             Name = ShipName;
+            if (!this.IsShipLine(points))
+            {
+                throw new Exception("Ship is not a line");
+            }
             for (int i = 0; i < points.Count - 1; i++)
             {
                 Deck a = new Deck();
@@ -89,11 +94,11 @@ namespace SeaBattle
             float TravelY = (float)Math.Pow(midShipY - midNewY, 2);
             float TravelDistance;
             TravelDistance = (float)Math.Sqrt(TravelX + TravelY);
-            if (Speed > TravelDistance)
+            if (Speed < TravelDistance)
             {
-                throw new ArgumentOutOfRangeException();
+                throw new Exception("Ship cant move");
             }
-            if (Sea1.ShipSpaceCheck(NewPosition))
+            if (Sea1.IsPlaceAvailable(NewPosition) && this.IsShipLine(NewPosition))
             {
                 for (int i = 0; i < NewPosition.Count; i++)
                 {
@@ -101,6 +106,30 @@ namespace SeaBattle
                     Decks[i].Location.Y = NewPosition[i].Y;
                 }
             }
+            else
+                throw new Exception("Ship cant move");
+        }
+        public bool IsShipOnPoint(Point ShipPoint)
+        {
+            foreach(var mydecks in this.Decks)
+            {
+                if(ShipPoint == mydecks.Location)
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+        public bool IsShipLine(List<Point> SameDecks)
+        {
+            for (int i = 0; i < SameDecks.Count - 1; i++)
+            {
+                if ((SameDecks[i].X != SameDecks[i + 1].X) && (SameDecks[i].Y != SameDecks[i + 1].Y))
+                {
+                    return false;
+                }
+            }
+            return true;
         }
     }
 }

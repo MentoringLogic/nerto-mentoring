@@ -17,11 +17,12 @@ namespace SeaBattleTest
             HybridShip hybrydo = new HybridShip("Kolipso", HybrydCoords);
             List<Point> WarCoords = new List<Point>(new Point[] { new Point(5, 5), new Point(5, 6), new Point(5, 7), new Point(5, 8)});
             BattleShip warrior = new BattleShip("Warr", WarCoords);
+            
             //act
             sea.AddShip(hybrydo);
             sea.AddShip(warrior);
             //assert
-            hybrydo.Invoking(hybrydo => hybrydo.MoveTo(MoveToCoords, sea)).Should().Throw<ArgumentOutOfRangeException>();
+            hybrydo.Invoking(hybrydo => hybrydo.MoveTo(MoveToCoords, sea)).Should().Throw<Exception>().WithMessage("Ship cant move");
         }
 
         [TestMethod]
@@ -38,7 +39,7 @@ namespace SeaBattleTest
             //act
             Action Act =  () => warrior.MoveTo(MoveToCoords, sea);
             //assert
-            Act.Should().Throw<ArgumentOutOfRangeException>();
+            Act.Should().Throw<Exception>().WithMessage("Ship cant move");
         }
         [TestMethod]
         public void AddShip_PlaceAvailable_ShipAdded()
@@ -84,7 +85,6 @@ namespace SeaBattleTest
             //act and assert
             warr.Should().Be(warrior);
         }
-
         [TestMethod]
         public void Ships_AreNotEqual_true()
         {

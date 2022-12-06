@@ -1,34 +1,34 @@
 using SeaBattle;
 using FluentAssertions;
 using System.Drawing;
-using System.Threading;
 
 namespace SeaBattleTest
 {
     [TestClass]
     public class Seas
-    {  
+    {
         [TestMethod]
-        public void AddShip_ShipOutOfBorders_ThrowException()
+        [DataRow(1, 3, 3, 4, 5, 6)]
+        public void CreateShip_AddShipIsNotLine_Exception(int x1, int y1, int x2, int y2, int x3, int y3)
+        {
+            List<Point> Coords = new List<Point>(new Point[] { new Point(x1, y1), new Point(x2, y2), new Point(x3, y3) });
+            HybridShip Mship;
+            //act
+            Action Act = () => Mship = new HybridShip("Tendari", Coords);
+            //assert
+            Act.Should().Throw<Exception>().WithMessage("Ship is not a line");
+        }
+        [TestMethod]
+        [DataRow (0, 0, 0, 1, 0, 2)]
+        [DataRow (-2, 1, -2, 2, -2, 3)]
+        public void AddShip_ShipOutOfBorders_ThrowException(int x1, int y1, int x2, int y2, int x3, int y3)
         {
             //arrange
             Sea sea = new Sea(10, 10);
-            List<Point> Coords = new List<Point>(new Point[] { new Point(-2, 1), new Point(-2, 2), new Point(-2, 3) });
+            List<Point> Coords = new List<Point>(new Point[] { new Point(x1, y1), new Point(x2, y2), new Point(x3, y3) });
             BattleShip warship = new BattleShip("Tendari", Coords);
             //act
             Action Act = () => sea.AddShip(warship);
-            //assert
-            Act.Should().Throw<Exception>().WithMessage("Ship can not exsist with this Sea borders");
-        }
-        [TestMethod]
-        public void AddShip_ShipOnBorders_ThrowException()
-        {
-            //arrange
-            Sea sea = new Sea(10, 10);
-            List<Point> Coords = new List<Point>(new Point[] { new Point(0, 0), new Point(0, 1), new Point(0, 2) });
-            HybridShip hybrydo = new HybridShip("Colossus", Coords);
-            //act
-            Action Act = () => sea.AddShip(hybrydo);
             //assert
             Act.Should().Throw<Exception>().WithMessage("Ship can not exsist with this Sea borders");
         }
@@ -84,6 +84,7 @@ namespace SeaBattleTest
             toStr.Should().Contain("Width: 10");
             toStr.Should().Contain("Ships: ");
         }
+
     }
 }
 

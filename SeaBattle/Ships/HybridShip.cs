@@ -10,7 +10,6 @@ namespace SeaBattle
         {
 
         }
-
         // Method Repair is not implmented yet
         public void Repair()
         {
