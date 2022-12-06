@@ -87,6 +87,24 @@ namespace SeaBattleTest
             toStr.Should().Contain("Width: 10");
             toStr.Should().Contain("Ships: ");
         }
+
+        [TestMethod]
+        public void IsPlaceAvailable_ShipsHaveSameCoordinates_ShouldReturnFalse()
+        {
+            //arrange
+            Sea sea = new Sea(10, 10);
+            List<Point> HybrydCoords = new List<Point>(new Point[] { new Point(4, 3), new Point(4, 4), new Point(4, 5) });
+            HybridShip hybrydo = new HybridShip("Gintara", HybrydCoords);
+            List<Point> WarCoords = new List<Point>(new Point[] { new Point(4, 3), new Point(3, 4) });
+            BattleShip warrior = new BattleShip("Kalipso", WarCoords);
+            sea.AddShip(hybrydo);
+
+            //act
+            bool result = sea.IsPlaceAvailable(warrior);
+
+            //assert
+            result.Should().BeFalse();
+        }
     }
 }
 

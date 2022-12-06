@@ -112,7 +112,7 @@ namespace SeaBattleTest
             a.AddShip(hybrydo);
             a.AddShip(warrior);
 
-            hybrydo.Invoking(hybrydo => hybrydo.MoveTo(NewDecks, a)).Should().Throw<Exception>().WithMessage("Deck already occupied");
+            //hybrydo.Invoking(hybrydo => hybrydo.MoveTo(NewDecks, a)).Should().Throw<Exception>().WithMessage("Deck already occupied");
         }
         
         [TestMethod]

@@ -1,7 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Drawing;
 using System.Text;
-using System.Drawing;
 namespace SeaBattle
 {
     public class Sea
@@ -66,7 +64,7 @@ namespace SeaBattle
                     foreach (var point in ship.Decks)
                     {
                         // If this true - point is occupied so thats why it returns false 
-                        if (deck.X == point.Location.X || deck.Y == point.Location.Y)
+                        if (deck.X == point.Location.X && deck.Y == point.Location.Y)
 
                             return false;
                         else
@@ -77,6 +75,14 @@ namespace SeaBattle
 
             return true;
         }
+
+        public bool IsPlaceAvailable(BaseShip Ship)
+        {
+            if (Ship.Decks.Count == 0) throw new Exception("Ship coordinates must not be empty.");
+
+            return !Ships.Any(x => Ship.HasCoordinatesIntersect(x.Decks));
+        }
+
         public override string ToString()
         {
             StringBuilder output = new StringBuilder("Height: ", 25);

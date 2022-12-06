@@ -52,7 +52,10 @@ namespace SeaBattle
 
         }
 
-
+        public bool HasCoordinatesIntersect(List<Deck> DecksList)
+        {
+            return Decks.Any(e => e.HasCoordinatesIntersect(DecksList));
+        }
 
         // To do in the MoveTo method  
         // 1. + calculating mid-ship coordinates of current position
