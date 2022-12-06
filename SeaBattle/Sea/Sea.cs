@@ -53,13 +53,13 @@ namespace SeaBattle
                     throw new Exception("Ship can not exsist with this Sea borders");
             }
 
-            if (ShipSpaceCheck(NewLocations))
+            if (IsPlaceAvailable(NewLocations))
 
                 Ships.Add(s1);
   
         }
 
-        public bool ShipSpaceCheck(List<Point> DecksPoints)
+        public bool IsPlaceAvailable(List<Point> DecksPoints)
         {
             foreach (var (deck, point) in from deck in DecksPoints
                                           from ship in Ships
@@ -67,7 +67,7 @@ namespace SeaBattle
                                           select (deck, point))
             {
                 // If this true - point is occupied so thats why it returns false 
-                if (deck.X == point.Location.X || deck.Y == point.Location.Y)
+                if (deck.X == point.Location.X && deck.Y == point.Location.Y)
                     return false;
                 else
                     return true;
