@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
-using System.Linq;
 using System.Drawing;
 namespace SeaBattle
 {
@@ -12,11 +11,10 @@ namespace SeaBattle
         public int SeaHeight;
         public Sea(int x, int y)
         {
-            SeaWidth= x;
-            SeaHeight= y;
+            SeaWidth = x;
+            SeaHeight = y;
             Ships = new List<BaseShip>();
         }
-
         // Property to provide indexer
         public BaseShip this[int i]
         {
@@ -52,28 +50,26 @@ namespace SeaBattle
 
                     throw new Exception("Ship can not exsist with this Sea borders");
             }
-
             if (IsPlaceAvailable(NewLocations))
 
                 Ships.Add(s1);
-  
         }
 
         public bool IsPlaceAvailable(List<Point> DecksPoints)
         {
-            foreach (var (deck, point) in from deck in DecksPoints
-                                          from ship in Ships
-                                          from point in ship.Decks
-                                          select (deck, point))
+            foreach (var deck in DecksPoints)
             {
-                // If this true - point is occupied so thats why it returns false 
-                if (deck.X == point.Location.X && deck.Y == point.Location.Y)
-                    return false;
-                else
-                    return true;
+                foreach (var ship in Ships)
+                {
+                    if (ship.IsShipOnPoint(new Point(deck.X, deck.Y)))
+                    {
+                        return false;
+                    }
+                }
             }
             return true;
         }
+
         public override string ToString()
         {
             StringBuilder output = new StringBuilder("Height: ", 25);
