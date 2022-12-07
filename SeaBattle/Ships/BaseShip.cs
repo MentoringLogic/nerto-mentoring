@@ -41,7 +41,7 @@ namespace SeaBattle
             }
             return output.ToString();
         }
-        public static bool operator ==(BaseShip s1, BaseShip s2)
+        public static bool operator == (BaseShip s1, BaseShip s2)
         {
             if (ReferenceEquals(s1, s2))
                 return true;
@@ -51,7 +51,8 @@ namespace SeaBattle
                 return false;
             return s1.Equals(s2);
         }
-        public static bool operator !=(BaseShip s1, BaseShip s2) => !(s1 == s2);
+        public static bool operator != (BaseShip s1, BaseShip s2) => !(s1 == s2);
+        
         public bool Equals(BaseShip thisShip)
         {
             if (ReferenceEquals(thisShip, null))
