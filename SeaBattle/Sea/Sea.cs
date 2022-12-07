@@ -61,7 +61,7 @@ namespace SeaBattle
             {
                 foreach (var ship in Ships)
                 {
-                    if (ship.IsShipOnPoint(new Point (deck.X, deck.Y)))
+                    if (ship.IsShipOnPoint(new Point(deck.X, deck.Y)))
                     {
                         return false;
                     }

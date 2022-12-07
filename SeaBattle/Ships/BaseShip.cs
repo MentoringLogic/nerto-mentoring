@@ -52,11 +52,12 @@ namespace SeaBattle
             return s1.Equals(s2);
         }
         public static bool operator != (BaseShip s1, BaseShip s2) => !(s1 == s2);
+        
         public bool Equals(BaseShip thisShip)
         {
             if (ReferenceEquals(thisShip, null))
                 return false;
-            if (ReferenceEquals(this, thisShip)) 
+            if (ReferenceEquals(this, thisShip))
                 return true;
             return Decks.Count.Equals(thisShip.Decks.Count) && GetType().Equals(thisShip.GetType());
         }
@@ -111,9 +112,9 @@ namespace SeaBattle
         }
         public bool IsShipOnPoint(Point ShipPoint)
         {
-            foreach(var mydecks in this.Decks)
+            foreach (var mydecks in this.Decks)
             {
-                if(ShipPoint == mydecks.Location)
+                if (ShipPoint == mydecks.Location)
                 {
                     return true;
                 }
