@@ -15,7 +15,7 @@ namespace SeaBattle
             Speed = 5;
             Decks = new List<Deck>();
             Name = ShipName;
-            if (!this.IsShipLine(points))
+            if (!this.ShipCoordsLine(points) || !this.ShipCoordsUnion(points) || !this.ShipCoordsUnique(points))
             {
                 throw new Exception("Ship is not a line");
             }
@@ -99,7 +99,7 @@ namespace SeaBattle
             {
                 throw new Exception("Ship cant move");
             }
-            if (Sea1.IsPlaceAvailable(NewPosition) && this.IsShipLine(NewPosition))
+            if (Sea1.IsPlaceAvailable(this) && this.ShipCoordsLine(NewPosition) && this.ShipCoordsUnion(NewPosition) && this.ShipCoordsUnique(NewPosition))
             {
                 for (int i = 0; i < NewPosition.Count; i++)
                 {
@@ -110,25 +110,48 @@ namespace SeaBattle
             else
                 throw new Exception("Ship cant move");
         }
-        public bool IsShipOnPoint(Point ShipPoint)
+        public bool HasCoordinatesIntersect(List<Deck> DecksList)
         {
-            foreach (var mydecks in this.Decks)
-            {
-                if (ShipPoint == mydecks.Location)
-                {
-                    return true;
-                }
-            }
-            return false;
+            return Decks.Any(e => e.HasCoordinatesIntersect(DecksList));
         }
-        public bool IsShipLine(List<Point> SameDecks)
+        public bool ShipCoordsLine(List<Point> SameDecks)
         {
+            bool lineFlagX = true;
+            bool lineFlagY = true;
+
             for (int i = 0; i < SameDecks.Count - 1; i++)
             {
-                if ((SameDecks[i].X != SameDecks[i + 1].X) && (SameDecks[i].Y != SameDecks[i + 1].Y))
+                lineFlagX &= SameDecks[i].X == SameDecks[i + 1].X;
+                lineFlagY &= SameDecks[i].Y == SameDecks[i + 1].Y;
+            }
+            return (lineFlagX ^ lineFlagY);
+        }
+        public bool ShipCoordsUnion(List<Point> SameDecks)
+        {
+            bool unionFlagX = true;
+            bool unionFlagY = true;
+            for (int i = 0; i < SameDecks.Count - 1; i++)
+            {
+                unionFlagX &= (SameDecks[i].X == SameDecks[i + 1].X) || (SameDecks[i].X == SameDecks[i + 1].X + 1) || (SameDecks[i].X == SameDecks[i + 1].X - 1);
+                unionFlagY &= (SameDecks[i].Y == SameDecks[i + 1].Y) || (SameDecks[i].Y == SameDecks[i + 1].Y + 1) || (SameDecks[i].Y == SameDecks[i + 1].Y - 1);
+            }
+            return (unionFlagX && unionFlagY);
+        }
+        public bool ShipCoordsUnique(List<Point> SameDecks)
+        {
+            int uniqFlagX = 0;
+            int uniqFlagY = 0;
+            for (int i = 0; i < SameDecks.Count - 1; i++)
+            {
+                uniqFlagX = 0;
+                uniqFlagY = 0;
+                foreach (Point sd in SameDecks)
                 {
-                    return false;
+                    if (SameDecks[i].X == sd.X) uniqFlagX++;
+                    if (SameDecks[i].Y == sd.Y) uniqFlagY++;
                 }
+                if ((uniqFlagX > 1) && (uniqFlagY > 1)) 
+                    return false;
             }
             return true;
         }

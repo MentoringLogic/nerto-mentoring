@@ -50,26 +50,17 @@ namespace SeaBattle
 
                     throw new Exception("Ship can not exsist with this Sea borders");
             }
-            if (IsPlaceAvailable(NewLocations))
+            if (IsPlaceAvailable(s1))
 
                 Ships.Add(s1);
         }
 
-        public bool IsPlaceAvailable(List<Point> DecksPoints)
+        public bool IsPlaceAvailable(BaseShip Ship)
         {
-            foreach (var deck in DecksPoints)
-            {
-                foreach (var ship in Ships)
-                {
-                    if (ship.IsShipOnPoint(new Point(deck.X, deck.Y)))
-                    {
-                        return false;
-                    }
-                }
-            }
-            return true;
-        }
+            if (Ship.Decks.Count == 0) throw new Exception("Ship coordinates must not be empty.");
 
+            return !Ships.Any(x => Ship.HasCoordinatesIntersect(x.Decks));
+        }
         public override string ToString()
         {
             StringBuilder output = new StringBuilder("Height: ", 25);

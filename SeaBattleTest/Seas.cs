@@ -9,6 +9,9 @@ namespace SeaBattleTest
     {
         [TestMethod]
         [DataRow(1, 3, 3, 4, 5, 6)]
+        [DataRow(1, 1, 1, 2, 1, 4)]
+        [DataRow(1, 1, 1, 2, 1, 1)]
+        [DataRow(1, 1, 3, 2, 1, 2)]
         public void CreateShip_AddShipIsNotLine_Exception(int x1, int y1, int x2, int y2, int x3, int y3)
         {
             List<Point> Coords = new List<Point>(new Point[] { new Point(x1, y1), new Point(x2, y2), new Point(x3, y3) });

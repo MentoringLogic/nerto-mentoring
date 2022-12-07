@@ -9,5 +9,9 @@ namespace SeaBattle
         public Point Location;
         // State for decks true = Onfloat, false = Sank 
         public bool IsAlive { get; set; } = true;
+        public bool HasCoordinatesIntersect(List<Deck> Decks)
+        {
+            return Decks.Any(x => x.Location == Location);
+        }
     }
 }
