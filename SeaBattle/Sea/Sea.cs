@@ -48,7 +48,7 @@ namespace SeaBattle
 
                 if (deck.Location.X > SeaWidth || deck.Location.Y > SeaHeight || deck.Location.X <= 0 || deck.Location.Y <= 0)
 
-                    throw new Exception("Ship can not exsist with this Sea borders");
+                    throw new SeaBordersException();
             }
             if (IsPlaceAvailable(s1))
 

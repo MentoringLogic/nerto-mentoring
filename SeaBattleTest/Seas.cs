@@ -19,7 +19,7 @@ namespace SeaBattleTest
             //act
             Action Act = () => Mship = new HybridShip("Tendari", Coords);
             //assert
-            Act.Should().Throw<Exception>().WithMessage("Ship is not a line");
+            Act.Should().Throw<ShipIsNotLineException>();
         }
         [TestMethod]
         [DataRow (0, 0, 0, 1, 0, 2)]
@@ -35,7 +35,7 @@ namespace SeaBattleTest
             //act
             Action Act = () => sea.AddShip(warship);
             //assert
-            Act.Should().Throw<Exception>().WithMessage("Ship can not exsist with this Sea borders");
+            Act.Should().Throw<SeaBordersException>();
         }
         [TestMethod]
         public void Indexer_GetFirstElement_ShipByIndex()
