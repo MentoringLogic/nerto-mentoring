@@ -98,7 +98,11 @@ namespace SeaBattle
             TravelDistance = (float)Math.Sqrt(TravelX + TravelY);
             if (Speed < TravelDistance)
             {
+<<<<<<< HEAD
                 throw new ShipCantMoveException();
+=======
+                throw new Exception("Ship can't move");
+>>>>>>> 0374b09c2c62ff98a257a64cfc138ba0fb471506
             }
             if (Sea1.IsPlaceAvailable(this) && this.ShipCoordsLine(NewPosition) && this.ShipCoordsUnion(NewPosition) && this.ShipCoordsUnique(NewPosition))
             {
@@ -109,7 +113,11 @@ namespace SeaBattle
                 }
             }
             else
+<<<<<<< HEAD
                 throw new ShipCantMoveException();
+=======
+                throw new Exception("Ship can't move");
+>>>>>>> 0374b09c2c62ff98a257a64cfc138ba0fb471506
         }
         public bool HasCoordinatesIntersect(List<Deck> DecksList)
         {
