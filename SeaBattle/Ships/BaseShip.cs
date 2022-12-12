@@ -41,6 +41,7 @@ namespace SeaBattle
             }
             return output.ToString();
         }
+
         public static bool operator == (BaseShip s1, BaseShip s2)
         {
             if (ReferenceEquals(s1, s2))
@@ -97,7 +98,7 @@ namespace SeaBattle
             TravelDistance = (float)Math.Sqrt(TravelX + TravelY);
             if (Speed < TravelDistance)
             {
-                throw new Exception("Ship cant move");
+                throw new ShipCantMoveException();
             }
             if (Sea1.IsPlaceAvailable(this) && this.ShipCoordsLine(NewPosition) && this.ShipCoordsUnion(NewPosition) && this.ShipCoordsUnique(NewPosition))
             {
@@ -108,7 +109,7 @@ namespace SeaBattle
                 }
             }
             else
-                throw new Exception("Ship cant move");
+                throw new ShipCantMoveException();
         }
         public bool HasCoordinatesIntersect(List<Deck> DecksList)
         {
@@ -124,7 +125,7 @@ namespace SeaBattle
                 lineFlagX &= SameDecks[i].X == SameDecks[i + 1].X;
                 lineFlagY &= SameDecks[i].Y == SameDecks[i + 1].Y;
             }
-            return (lineFlagX ^ lineFlagY);
+            return lineFlagX ^ lineFlagY;
         }
         public bool ShipCoordsUnion(List<Point> SameDecks)
         {
@@ -132,10 +133,12 @@ namespace SeaBattle
             bool unionFlagY = true;
             for (int i = 0; i < SameDecks.Count - 1; i++)
             {
-                unionFlagX &= (SameDecks[i].X == SameDecks[i + 1].X) || (SameDecks[i].X == SameDecks[i + 1].X + 1) || (SameDecks[i].X == SameDecks[i + 1].X - 1);
-                unionFlagY &= (SameDecks[i].Y == SameDecks[i + 1].Y) || (SameDecks[i].Y == SameDecks[i + 1].Y + 1) || (SameDecks[i].Y == SameDecks[i + 1].Y - 1);
+                var current = SameDecks[i];
+                var next = SameDecks[i + 1];
+                unionFlagX &= Math.Abs(current.X - next.X) <= 1;
+                unionFlagY &= Math.Abs(current.Y - next.Y) <= 1;
             }
-            return (unionFlagX && unionFlagY);
+            return unionFlagX && unionFlagY;
         }
         public bool ShipCoordsUnique(List<Point> SameDecks)
         {

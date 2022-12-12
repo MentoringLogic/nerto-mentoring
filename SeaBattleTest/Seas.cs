@@ -24,6 +24,8 @@ namespace SeaBattleTest
         [TestMethod]
         [DataRow (0, 0, 0, 1, 0, 2)]
         [DataRow (-2, 1, -2, 2, -2, 3)]
+        [DataRow(1, 0, 1, 1, 1, 2)]
+        [DataRow(-1, 1, -1, 2, -1, 3)]
         public void AddShip_ShipOutOfBorders_ThrowException(int x1, int y1, int x2, int y2, int x3, int y3)
         {
             //arrange
@@ -76,18 +78,16 @@ namespace SeaBattleTest
             sea.Invoking(sea => sea[2]).Should().Throw<IndexOutOfRangeException>();
         }
         [TestMethod]
-        public void toString_10x10Sea_PrintCorrectSeaDescriptionToConsole()
+        public void toString_10x10Sea_BeCorrect()
         {
             //arrange
             Sea sea = new Sea(10, 10);
             //act
             string toStr = sea.ToString();
             //assert
-            toStr.Should().Contain("Height: 10");
-            toStr.Should().Contain("Width: 10");
-            toStr.Should().Contain("Ships: ");
+            toStr.Should().Be("Height: 10, Width: 10, Ships: ");
         }
-
+        
     }
 }
 
