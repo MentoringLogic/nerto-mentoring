@@ -78,7 +78,7 @@ namespace SeaBattleTest
             sea.Invoking(sea => sea[2]).Should().Throw<IndexOutOfRangeException>();
         }
         [TestMethod]
-        public void toString_10x10Sea_BeCorrect()
+        public void ToString_10x10Sea_BeCorrect()
         {
             //arrange
             Sea sea = new Sea(10, 10);

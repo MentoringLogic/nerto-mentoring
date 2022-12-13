@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using System.Drawing;
+using System.Linq;
 namespace SeaBattle
 {
     public class BaseShip
@@ -100,7 +101,7 @@ namespace SeaBattle
             {
                 throw new ShipCantMoveException();
             }
-            if (Sea1.IsPlaceAvailable(this) && this.ShipCoordsLine(NewPosition) && this.ShipCoordsUnion(NewPosition) && this.ShipCoordsUnique(NewPosition))
+            if (Sea1.IsPlaceAvailable(this) && this.ShipCoordsLine(NewPosition))
             {
                 for (int i = 0; i < NewPosition.Count; i++)
                 {
@@ -132,6 +133,8 @@ namespace SeaBattle
         {
             bool unionFlagX = true;
             bool unionFlagY = true;
+            SameDecks.OrderBy(d => d.X).ThenBy(d => d.Y).ToList();
+
             for (int i = 0; i < SameDecks.Count - 1; i++)
             {
                 var current = SameDecks[i];
