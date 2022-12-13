@@ -1,7 +1,6 @@
 ﻿using SeaBattle;
 using FluentAssertions;
 using System.Drawing;
-using System.Threading;
 using static SeaBattle.BaseShip;
 
 namespace SeaBattleTest
@@ -10,11 +9,13 @@ namespace SeaBattleTest
     public class Ships
     {
         [TestMethod]
-        public void MoveTo_PlaceAlreadyOccupied_ThrowsException()
+        [DataRow(1, 3, 1, 4, 1, 5)]
+        [DataRow(1, 1, 1, 2, 1, 3)]
+        public void MoveTo_PlaceAlreadyOccupied_ThrowsException(int x1, int y1, int x2, int y2, int x3, int y3)
         {
             //arrange
             Sea sea = new Sea(10, 10);
-            List<Point> MoveToCoords = new List<Point>(new Point[] { new Point(5, 5), new Point(5, 6), new Point(5, 7), new Point(5, 8) });
+            List<Point> MoveToCoords = new List<Point>(new Point[] { new Point(x1, y1), new Point(x2, y2), new Point(x3, y3) });
             List<Point> HybrydCoords = new List<Point>(new Point[] { new Point(3, 3), new Point(3, 4), new Point(3, 5), new Point(3, 6) });
             HybridShip hybrydo = new HybridShip("Kolipso", HybrydCoords);
             List<Point> WarCoords = new List<Point>(MoveToCoords);
@@ -58,10 +59,9 @@ namespace SeaBattleTest
             //assert
             sea[0].Should().Be(hybrydo);
             sea[1].Should().Be(warrior);
-
         }
         [TestMethod]
-        public void toString_HybrydShip_BeCorrect()
+        public void ToString_HybrydShip_BeCorrect()
         {
             //arrange
             List<Point> HybrydCoords = new List<Point>(new Point[] { new Point(5, 3), new Point(5, 4), new Point(5, 5) });
