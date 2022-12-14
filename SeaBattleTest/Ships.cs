@@ -1,6 +1,8 @@
 ﻿using SeaBattle;
 using FluentAssertions;
 using System.Drawing;
+using System.Threading;
+using static SeaBattle.BaseShip;
 
 namespace SeaBattleTest
 {
@@ -15,14 +17,14 @@ namespace SeaBattleTest
             List<Point> MoveToCoords = new List<Point>(new Point[] { new Point(5, 5), new Point(5, 6), new Point(5, 7), new Point(5, 8) });
             List<Point> HybrydCoords = new List<Point>(new Point[] { new Point(3, 3), new Point(3, 4), new Point(3, 5), new Point(3, 6) });
             HybridShip hybrydo = new HybridShip("Kolipso", HybrydCoords);
-            List<Point> WarCoords = new List<Point>(new Point[] { new Point(5, 5), new Point(5, 6), new Point(5, 7), new Point(5, 8)});
+            List<Point> WarCoords = new List<Point>(MoveToCoords);
             BattleShip warrior = new BattleShip("Warr", WarCoords);
             
             //act
             sea.AddShip(hybrydo);
             sea.AddShip(warrior);
             //assert
-            hybrydo.Invoking(hybrydo => hybrydo.MoveTo(MoveToCoords, sea)).Should().Throw<Exception>().WithMessage("Ship cant move");
+            hybrydo.Invoking(hybrydo => hybrydo.MoveTo(MoveToCoords, sea)).Should().Throw<ShipCantMoveException>();
         }
 
         [TestMethod]
@@ -39,7 +41,7 @@ namespace SeaBattleTest
             //act
             Action Act =  () => warrior.MoveTo(MoveToCoords, sea);
             //assert
-            Act.Should().Throw<Exception>().WithMessage("Ship cant move");
+            Act.Should().Throw<ShipCantMoveException>();
         }
         [TestMethod]
         public void AddShip_PlaceAvailable_ShipAdded()
@@ -59,7 +61,7 @@ namespace SeaBattleTest
 
         }
         [TestMethod]
-        public void toString_HybrydShip_ShouldPrintCorrectShipDescriptionToConsole()
+        public void toString_HybrydShip_BeCorrect()
         {
             //arrange
             List<Point> HybrydCoords = new List<Point>(new Point[] { new Point(5, 3), new Point(5, 4), new Point(5, 5) });
@@ -69,9 +71,7 @@ namespace SeaBattleTest
             //act
             string toStr = hybrydo.ToString();
             //assert
-            toStr.Should().Contain("Name: Gintara");
-            toStr.Should().Contain("Durability: 100");
-            toStr.Should().Contain("Speed: 5");
+            toStr.Should().Be("Name: Gintara, Type: SeaBattle.HybridShip, Durability: 100, Speed: 5, Decks:2, Coordinates: 5:3, 5:4, ");
         }
 
         [TestMethod]
