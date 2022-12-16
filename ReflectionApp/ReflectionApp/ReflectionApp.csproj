@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>Exe</OutputType>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>enable</Nullable>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="Education_dotNet_Reflection_classes">
+      <HintPath>bin\Debug\net6.0\Education_dotNet_Reflection_classes.dll</HintPath>
+    </Reference>
+    <Reference Include="Education_dotNet_Reflection_interface">
+      <HintPath>bin\Debug\net6.0\Education_dotNet_Reflection_interface.dll</HintPath>
+    </Reference>
+  </ItemGroup>
+
+</Project>
