@@ -1,34 +1,25 @@
-﻿//using Education_dotNet_Reflection_interface;
-//using Education_dotNet_Reflection_classes;
-using System.Reflection;
-using System.Linq;
+﻿using System.Reflection;
 
 public class MyReflection
 {
     public static void Main()
     {
-        Assembly assembly1 = Assembly.LoadFrom("Education_dotNet_Reflection_classes.dll");
-        Assembly assembly2 = Assembly.LoadFrom("Education_dotNet_Reflection_interface.dll");
+        var classesAsm = Assembly.LoadFrom("Education_dotNet_Reflection_classes.dll");
+        var classesTypes = classesAsm.GetTypes();
 
-        Type[] classTypes = assembly1.GetTypes();
-        foreach (Type ti in assembly2.GetTypes().Where(x => x.IsInterface))
-        {
-            foreach (Type classType in classTypes)
-            {
-                Type[] interfaceTypes = classType.GetInterfaces();
-                if (interfaceTypes.Contains(ti))
-                {
-                    var instance = Activator.CreateInstance(classType);
+        var interfaceAsm = Assembly.LoadFrom("Education_dotNet_Reflection_interface.dll");
+        var interfaceType = interfaceAsm.GetTypes().First();
 
-                    PropertyInfo prop = classType.GetProperty("CurrentIndex");
-                    prop.SetValue(instance, 0, null);
+        var implemented = classesTypes.Where(t => t.GetInterfaces().Contains(interfaceType)).First();
 
-                    MethodInfo mi = classType.GetMethod("GetNextIndex");
-                    var result = mi.Invoke(instance, null);
+        var instance = Activator.CreateInstance(implemented);
 
-                    Console.WriteLine($"{result} is a new index");
-                }
-            }
-        }
+        var currentIndexProp = implemented.GetProperty("CurrentIndex");
+        currentIndexProp?.SetValue(instance, 5);
+
+        var getNextIndexMethod = implemented.GetMethod("GetNextIndex");
+        var result = getNextIndexMethod?.Invoke(instance, null);
+
+        Console.WriteLine(result);
     }
 }
