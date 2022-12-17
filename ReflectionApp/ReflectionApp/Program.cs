@@ -1,5 +1,5 @@
-﻿//using Education_dotNet_Reflection_interface;
-//using Education_dotNet_Reflection_classes;
+﻿using Education_dotNet_Reflection_interface;
+using Education_dotNet_Reflection_classes;
 using System.Reflection;
 using System.Linq;
 
@@ -10,25 +10,24 @@ public class MyReflection
         Assembly assembly1 = Assembly.LoadFrom("Education_dotNet_Reflection_classes.dll");
         Assembly assembly2 = Assembly.LoadFrom("Education_dotNet_Reflection_interface.dll");
 
-        Type[] classTypes = assembly1.GetTypes();
-        foreach (Type ti in assembly2.GetTypes().Where(x => x.IsInterface))
+        var classTypes = assembly1.GetTypes().ToList();
+        var allInterfaces = assembly2.GetTypes().ToList();
+
+        var result2 = from i in allInterfaces
+                      from c in classTypes.Where(c => c.GetInterfaces().Contains(i)).ToList()
+                      select c;
+
+        foreach (var classWithInterface in result2)
         {
-            foreach (Type classType in classTypes)
-            {
-                Type[] interfaceTypes = classType.GetInterfaces();
-                if (interfaceTypes.Contains(ti))
-                {
-                    var instance = Activator.CreateInstance(classType);
+            var instance = Activator.CreateInstance(classWithInterface);
 
-                    PropertyInfo prop = classType.GetProperty("CurrentIndex");
-                    prop.SetValue(instance, 0, null);
+            PropertyInfo prop = classWithInterface.GetProperty("CurrentIndex");
+            prop.SetValue(instance, 0, null);
 
-                    MethodInfo mi = classType.GetMethod("GetNextIndex");
-                    var result = mi.Invoke(instance, null);
+            MethodInfo mi = classWithInterface.GetMethod("GetNextIndex");
+            var result = mi.Invoke(instance, null);
 
-                    Console.WriteLine($"{result} is a new index");
-                }
-            }
+            Console.WriteLine($"{result} is a new index");
         }
     }
 }
