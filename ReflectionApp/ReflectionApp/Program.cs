@@ -1,7 +1,6 @@
-﻿using Education_dotNet_Reflection_interface;
-using Education_dotNet_Reflection_classes;
-using System.Reflection;
+﻿using System.Reflection;
 using System.Linq;
+using Education_dotNet_Reflection_interface;
 
 public class MyReflection
 {
@@ -13,7 +12,7 @@ public class MyReflection
         var classTypes = assembly1.GetTypes().ToList();
         var allInterfaces = assembly2.GetTypes().ToList();
 
-        var result2 = from i in allInterfaces
+        var result2 = from i in allInterfaces.Where(i => i.Name == "IInterface")
                       from c in classTypes.Where(c => c.GetInterfaces().Contains(i)).ToList()
                       select c;
 
@@ -22,7 +21,7 @@ public class MyReflection
             var instance = Activator.CreateInstance(classWithInterface);
 
             PropertyInfo prop = classWithInterface.GetProperty("CurrentIndex");
-            prop.SetValue(instance, 0, null);
+            prop.SetValue(instance, 3, null);
 
             MethodInfo mi = classWithInterface.GetMethod("GetNextIndex");
             var result = mi.Invoke(instance, null);
