@@ -14,6 +14,12 @@
     <Reference Include="Education_dotNet_Reflection_interface">
       <HintPath>bin\Debug\net6.0\Education_dotNet_Reflection_interface.dll</HintPath>
     </Reference>
+    <Reference Include="ReflectionMockClasses">
+      <HintPath>..\ReflectionMockClasses\bin\Debug\net6.0\ReflectionMockClasses.dll</HintPath>
+    </Reference>
+    <Reference Include="ReflectionMockInterfaces">
+      <HintPath>..\ReflectionMock\bin\Debug\net6.0\ReflectionMockInterfaces.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>
