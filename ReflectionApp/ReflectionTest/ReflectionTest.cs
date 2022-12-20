@@ -4,7 +4,7 @@ using NSubstitute;
 using Education_dotNet_Reflection_interface;
 using Education_dotNet_Reflection_classes;
 using System.Collections.Generic;
-
+using ReflectionApp;
 namespace ReflectionApp
 {
     [TestClass]
@@ -13,28 +13,30 @@ namespace ReflectionApp
         [TestMethod]
         public void LoadASM_stringNotDll_ThrowException()
         {
-            //arrange and act
-            Action Act = () => MyReflection.LoadASM("Gigachad");
+            //arrange
+            var newFileData = new FileSystemData();
+            //act
+            Action Act = () => newFileData.LoadASM("Gigachad");
             //assert
             Act.Should().Throw<Exception>("Its not dll");
         }
-        //[TestMethod]
-        //public void GetNextIndexMethod_2_returns3()
-        //{
-        //    //arrange
-        //    var MockInterface = Substitute.For<IInterface>();
-        //    var MockClass = Substitute.For<ClassB>();
-            
-        //    List<Type> interfaces = new List<Type>();
-        //    List<Type> classes = new List<Type>();
-            
-        //    int CurrentIndex = 2;
-        //    //act
-        //    interfaces.Add((Type) MockInterface);
-        //    //classes.Add((Type) MockClass);
-        //    //Action Act = () => MyReflection.GetNextIndexMethod( interfaces, MockClass, CurrentIndex);
-        //    //assert
-        //    //Act.Should().;
-        //}
+
+        [TestMethod]
+        public void GetNextIndexMethod_2_returns3()
+        {
+            //arrange
+            var myFileData = Substitute.For<IFileSystemData>();
+
+            myFileData.LoadASM("Education_dotNet_Reflection_interface.dll").Returns(new System.Type[] { typeof(IInterface) });
+            myFileData.LoadASM("Education_dotNet_Reflection_classes.dll").Returns(new System.Type[] { typeof(ClassB) });
+
+            var classInstance = new ReflectionClass(myFileData);
+
+            //act
+            var result = (int) classInstance.GetNextIndexMethod(4);
+
+            //assert
+            result.Should().Be(5);
+        }
     }
 }
