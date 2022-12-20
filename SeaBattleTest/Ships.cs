@@ -1,0 +1,101 @@
+﻿using SeaBattle;
+using FluentAssertions;
+using System.Drawing;
+using static SeaBattle.BaseShip;
+
+namespace SeaBattleTest
+{
+    [TestClass]
+    public class Ships
+    {
+        [TestMethod]
+        [DataRow(1, 3, 1, 4, 1, 5)]
+        [DataRow(1, 1, 1, 2, 1, 3)]
+        public void MoveTo_PlaceAlreadyOccupied_ThrowsException(int x1, int y1, int x2, int y2, int x3, int y3)
+        {
+            //arrange
+            Sea sea = new Sea(10, 10);
+            List<Point> MoveToCoords = new List<Point>(new Point[] { new Point(x1, y1), new Point(x2, y2), new Point(x3, y3) });
+            List<Point> HybrydCoords = new List<Point>(new Point[] { new Point(3, 3), new Point(3, 4), new Point(3, 5), new Point(3, 6) });
+            HybridShip hybrydo = new HybridShip("Kolipso", HybrydCoords);
+            List<Point> WarCoords = new List<Point>(MoveToCoords);
+            BattleShip warrior = new BattleShip("Warr", WarCoords);
+            
+            //act
+            sea.AddShip(hybrydo);
+            sea.AddShip(warrior);
+            //assert
+            hybrydo.Invoking(hybrydo => hybrydo.MoveTo(MoveToCoords, sea)).Should().Throw<ShipCantMoveException>();
+        }
+
+        [TestMethod]
+        public void MoveTo_SpeedToLow_ThrowException()
+        {
+            //arrange
+            Sea sea = new Sea(10, 10);
+            
+            List<Point> WarCoords = new List<Point>(new Point[] { new Point(1, 1), new Point(1, 2)});
+            BattleShip warrior = new BattleShip("Koalisto", WarCoords);          
+            warrior.Speed = 5;
+            sea.AddShip(warrior);
+            List<Point> MoveToCoords = new List<Point>(new Point[] { new Point(8, 9), new Point(9, 9) });
+            //act
+            Action Act =  () => warrior.MoveTo(MoveToCoords, sea);
+            //assert
+            Act.Should().Throw<ShipCantMoveException>();
+        }
+        [TestMethod]
+        public void AddShip_PlaceAvailable_ShipAdded()
+        {
+            //arrange
+            Sea sea = new Sea(10, 10);
+            List<Point> HybrydCoords = new List<Point>(new Point[] { new Point(4, 3), new Point(4, 4), new Point(4, 5), new Point(4, 6) });
+            HybridShip hybrydo = new HybridShip("Gintama", HybrydCoords);
+            List<Point> WarCoords = new List<Point>(new Point[] { new Point(7, 5), new Point(7, 6), new Point(7, 7) });
+            BattleShip warrior = new BattleShip("Warrior", WarCoords);
+            //act
+            sea.AddShip(hybrydo);
+            sea.AddShip(warrior);
+            //assert
+            sea[0].Should().Be(hybrydo);
+            sea[1].Should().Be(warrior);
+        }
+        [TestMethod]
+        public void ToString_HybrydShip_BeCorrect()
+        {
+            //arrange
+            List<Point> HybrydCoords = new List<Point>(new Point[] { new Point(5, 3), new Point(5, 4), new Point(5, 5) });
+            HybridShip hybrydo = new HybridShip("Gintara", HybrydCoords);
+            hybrydo.Speed = 5;
+            hybrydo.Durability = 100;
+            //act
+            string toStr = hybrydo.ToString();
+            //assert
+            toStr.Should().Be("Name: Gintara, Type: SeaBattle.HybridShip, Durability: 100, Speed: 5, Decks:2, Coordinates: 5:3, 5:4, ");
+        }
+
+        [TestMethod]
+        public void Ships_AreEqual_true()
+        {
+            //arrange
+            List<Point> WarrCoords = new List<Point>(new Point[] { new Point(4, 3), new Point(4, 4), new Point(4, 5), new Point(4, 6) });
+            BattleShip warr = new BattleShip("Tendari", WarrCoords);
+            List<Point> WarriorCoords = new List<Point>(new Point[] { new Point(7, 5), new Point(7, 6), new Point(7, 7), new Point(7, 8) });
+            BattleShip warrior = new BattleShip("Warr", WarriorCoords);
+            //act and assert
+            warr.Should().Be(warrior);
+        }
+        [TestMethod]
+        public void Ships_AreNotEqual_true()
+        {
+            //arrange
+            List<Point> HybrydCoords = new List<Point>(new Point[] { new Point(4, 3), new Point(4, 4), new Point(4, 5), new Point(4, 6) });
+            HybridShip hybrydo = new HybridShip("Gintara", HybrydCoords);
+            List<Point> WarCoords = new List<Point>(new Point[] { new Point(7, 5), new Point(7, 6), new Point(7, 7) });
+            BattleShip warrior = new BattleShip("Kalipso", WarCoords);
+            //act and assert
+            hybrydo.Should().NotBe(warrior);
+        }
+    }
+
+}
