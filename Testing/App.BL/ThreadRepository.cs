@@ -6,9 +6,14 @@ using FastMember;
 
 namespace App.BL
 {
-    public class ThreadRepository
+    public interface IGetById
     {
-        public CommentThread GetById(Guid id)
+        public CommentThread GetById(Guid id);
+    }
+
+    public class ThreadRepository : IGetById
+    {
+        public CommentThread GetById(Guid id) 
         {
             var connectionString = ConfigurationManager.ConnectionStrings["db"].ConnectionString;
             using var sqlConnection = new SqlConnection(connectionString);

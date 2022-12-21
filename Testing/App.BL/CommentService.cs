@@ -4,6 +4,15 @@ namespace App.BL
 {
     public class CommentService
     {
+        private ICommentStoreWrapper _commentWrapper;
+        private IGetById _getById;
+
+        public void SetStrategy(ICommentStoreWrapper CommentWrapper, IGetById GetById)
+        {
+            _commentWrapper = CommentWrapper; 
+            _getById = GetById;
+        }
+
         public bool AddCommentToThread(string commentText, string authorName, Guid threadId)
         {
             if (string.IsNullOrEmpty(commentText))
@@ -12,7 +21,7 @@ namespace App.BL
             }
 
             var repository = new ThreadRepository();
-            var thread = repository.GetById(threadId);
+            var thread = repository.GetById(threadId);  // It is going to load Substitute now
 
             if (thread == null)
             {
@@ -42,7 +51,7 @@ namespace App.BL
                 Index = ++thread.LastCommentIndex,
             };
 
-            CommentStore.AddCommentToThread(comment);
+            _commentWrapper.AddCommentToThread(comment);
 
             return true;
         }

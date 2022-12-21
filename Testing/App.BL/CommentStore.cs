@@ -3,8 +3,21 @@ using System.Configuration;
 
 namespace App.BL
 {
+    public interface ICommentStoreWrapper
+    {
+        public void AddCommentToThread(Comment comment);
+    }
+
+    public class CommentStoreWrapper : ICommentStoreWrapper
+    {
+        public void AddCommentToThread(Comment comment)
+        {
+            CommentStore.AddCommentToThread(comment);
+        }
+    }
+
     // DO NOT CHANGE STATIC
-    public static class CommentStore
+    public static class CommentStore 
     {
         public static void AddCommentToThread(Comment comment)
         {
@@ -16,4 +29,5 @@ namespace App.BL
             new SqlCommand(query, sqlConnection).ExecuteNonQuery();
         }
     }
+    
 }
