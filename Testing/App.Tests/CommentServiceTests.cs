@@ -15,18 +15,22 @@ namespace App.Tests
         public void AddCommentToThread_Comment_CommentAdded()
         {
             //Arrange
-            var commentStore = Substitute.For<ICommentStoreWrapper>();
-            var getById = Substitute.For<IGetById>();
+            var CommentStore = Substitute.For<ICommentStoreWrapper>();
+            var threadRepository = Substitute.For<IThreadRepository>();
+            var MyDateTime = Substitute.For<IMyDateTime>();
 
             Guid id = Guid.NewGuid();
             Comment a = new Comment();
             var counter = 0;
+            DateTime myDate = new DateTime(2022, 12, 22, 12, 30, 00);
+            CommentThread newComment = new CommentThread();
+            newComment.Created = myDate;
 
-            commentStore.When(x => x.AddCommentToThread(a)).Do(x => counter++);
-            getById.GetById(id).Returns(new CommentThread());
+            CommentStore.When(x => x.AddCommentToThread(a)).Do(x => counter++);
+            threadRepository.GetById(id).Returns(newComment);
+            MyDateTime.GetNow().Returns(myDate);
 
-            var CommentServiceInstance = new CommentService();
-            CommentServiceInstance.SetStrategy(commentStore, getById);
+            var CommentServiceInstance = new CommentService(CommentStore, threadRepository, MyDateTime);
             //Act
             var result = CommentServiceInstance.AddCommentToThread("Hello guys", "Elon Musk", id);
 

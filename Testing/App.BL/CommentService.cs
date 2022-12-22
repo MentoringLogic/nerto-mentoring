@@ -2,15 +2,28 @@
 
 namespace App.BL
 {
+    public interface IMyDateTime
+    {
+        DateTime GetNow();
+    }
+    public class myDateTime : IMyDateTime
+    {
+        public DateTime GetNow() => DateTime.Now;
+    }
     public class CommentService
     {
         private ICommentStoreWrapper _commentWrapper;
-        private IGetById _getById;
-
-        public void SetStrategy(ICommentStoreWrapper CommentWrapper, IGetById GetById)
+        private IThreadRepository _threadRepository;
+        private IMyDateTime _myDateTime;
+        public CommentService() : this(new CommentStoreWrapper(), new ThreadRepository(), new myDateTime())
         {
-            _commentWrapper = CommentWrapper; 
-            _getById = GetById;
+                
+        }
+        public CommentService(ICommentStoreWrapper commentWrapper, IThreadRepository threadRepository, IMyDateTime DateTime)
+        {
+            this._commentWrapper = commentWrapper; 
+            this._threadRepository = threadRepository;
+            this._myDateTime = DateTime;
         }
 
         public bool AddCommentToThread(string commentText, string authorName, Guid threadId)
@@ -20,8 +33,7 @@ namespace App.BL
                 throw new ArgumentException("Comment cannot be null or empty");
             }
 
-            var repository = new ThreadRepository();
-            var thread = repository.GetById(threadId);  // It is going to load Substitute now
+            var thread = _threadRepository.GetById(threadId);  // It is going to load Substitute now
 
             if (thread == null)
             {

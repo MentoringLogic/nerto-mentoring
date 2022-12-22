@@ -6,12 +6,12 @@ using FastMember;
 
 namespace App.BL
 {
-    public interface IGetById
+    public interface IThreadRepository
     {
         public CommentThread GetById(Guid id);
     }
 
-    public class ThreadRepository : IGetById
+    public class ThreadRepository : IThreadRepository
     {
         public CommentThread GetById(Guid id) 
         {
