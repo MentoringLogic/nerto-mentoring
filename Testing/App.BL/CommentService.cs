@@ -2,28 +2,29 @@
 
 namespace App.BL
 {
-    public interface IMyDateTime
+    public interface IDateTimeProvider
     {
-        DateTime GetNow();
+        public DateTime GetNow();
     }
-    public class myDateTime : IMyDateTime
+    public class DateTimeProvider : IDateTimeProvider
     {
         public DateTime GetNow() => DateTime.Now;
     }
+
     public class CommentService
     {
         private ICommentStoreWrapper _commentWrapper;
         private IThreadRepository _threadRepository;
-        private IMyDateTime _myDateTime;
-        public CommentService() : this(new CommentStoreWrapper(), new ThreadRepository(), new myDateTime())
+        private IDateTimeProvider _dateTimeProvider;
+        public CommentService() : this(new CommentStoreWrapper(), new ThreadRepository(), new DateTimeProvider())
         {
                 
         }
-        public CommentService(ICommentStoreWrapper commentWrapper, IThreadRepository threadRepository, IMyDateTime DateTime)
+        public CommentService(ICommentStoreWrapper commentWrapper, IThreadRepository threadRepository, IDateTimeProvider DateTimeProvider)
         {
             this._commentWrapper = commentWrapper; 
             this._threadRepository = threadRepository;
-            this._myDateTime = DateTime;
+            this._dateTimeProvider = DateTimeProvider;
         }
 
         public bool AddCommentToThread(string commentText, string authorName, Guid threadId)
@@ -40,7 +41,7 @@ namespace App.BL
                 return false;
             }
 
-            var today = DateTime.Now;
+            DateTime today = _dateTimeProvider.GetNow();
             var timeSpan = today.Subtract(thread.Created);
             if (timeSpan.TotalMinutes > 70)
             {
@@ -51,7 +52,6 @@ namespace App.BL
             {
                 return false;
             }
-
 
             var comment = new Comment()
             {
