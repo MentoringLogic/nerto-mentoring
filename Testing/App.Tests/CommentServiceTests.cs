@@ -4,13 +4,12 @@ using NSubstitute;
 using System.Threading;
 using System;
 using System.Linq;
-using Castle.Core.Resource;
 
 namespace App.Tests
 {
     public class CommentServiceTests
     {
-        // WRITE TESTS HERE this is eloon musk
+        // WRITE TESTS HERE
         public ICommentStoreWrapper commentStoreWrapper = Substitute.For<ICommentStoreWrapper>();
         public IThreadRepository threadRepository = Substitute.For<IThreadRepository>();
         public IDateTimeProvider dateTimeProvider = Substitute.For<IDateTimeProvider>();
@@ -27,12 +26,12 @@ namespace App.Tests
         {
             //Arrange
             Guid id = Guid.NewGuid();
-            DateTime myDate = new DateTime(2022, 12, 22, 12, 30, 00);
-            CommentThread newComment = new CommentThread();
-            newComment.Created = myDate;
+            DateTime CreatedDate = new DateTime(2022, 12, 22, 12, 30, 00);
+            CommentThread TestThread = new CommentThread();
+            TestThread.Created = CreatedDate;
 
-            threadRepository.GetById(id).Returns(newComment);
-            dateTimeProvider.GetNow().Returns(myDate);
+            threadRepository.GetById(id).Returns(TestThread);
+            dateTimeProvider.GetNow().Returns(CreatedDate);
 
             //Act
             var result = sut.AddCommentToThread("Hello guys", "Elon Musk", id);
@@ -46,12 +45,12 @@ namespace App.Tests
         {
             //Arrange
             Guid id = Guid.NewGuid();
-            DateTime myDate = new DateTime(2022, 12, 22, 12, 30, 00);
-            CommentThread newComment = new CommentThread();
-            newComment.Created = myDate;
+            DateTime CreatedDate = new DateTime(2022, 12, 22, 12, 30, 00);
+            CommentThread TestThread = new CommentThread();
+            TestThread.Created = CreatedDate;
 
-            threadRepository.GetById(id).Returns(newComment);
-            dateTimeProvider.GetNow().Returns(myDate);
+            threadRepository.GetById(id).Returns(TestThread);
+            dateTimeProvider.GetNow().Returns(CreatedDate);
             //Act
 
             //Assert
@@ -64,11 +63,11 @@ namespace App.Tests
         {
             //Arrange
             Guid id = Guid.NewGuid();
-            DateTime myDate = new DateTime(2022, 12, 22, 12, 30, 00);
-            CommentThread newComment = new CommentThread();
+            DateTime CreatedDate = new DateTime(2022, 12, 22, 12, 30, 00);
+            CommentThread TestThread = new CommentThread();
 
-            threadRepository.GetById(id).Returns(newComment);
-            dateTimeProvider.GetNow().Returns(myDate);
+            threadRepository.GetById(id).Returns(TestThread);
+            dateTimeProvider.GetNow().Returns(CreatedDate);
             //Act
 
             //Assert
@@ -81,10 +80,8 @@ namespace App.Tests
         {
             //Arrange
             Guid id = Guid.NewGuid();
-            CommentThread newComment = new CommentThread();
-            newComment = null;
 
-            threadRepository.GetById(id).Returns(newComment);
+            threadRepository.GetById(id).Returns((CommentThread)null);
             //Act
             var result = sut.AddCommentToThread("Hello guys", "Elon Musk", id);
             //Assert
@@ -92,14 +89,14 @@ namespace App.Tests
         }
 
         [Fact]
-        public void AddCommentToThread_ThreadIsTrue_False()
+        public void AddCommentToThread_ResolvedIsTrue_False()
         {
             //Arrange
             Guid id = Guid.NewGuid();
-            CommentThread newComment = new CommentThread();
-            newComment.Resolved = true;
+            CommentThread TestThread = new CommentThread();
+            TestThread.Resolved = true;
 
-            threadRepository.GetById(id).Returns(newComment);
+            threadRepository.GetById(id).Returns(TestThread);
 
             //Act
             var result = sut.AddCommentToThread("Hello guys", "Elon Musk", id);
