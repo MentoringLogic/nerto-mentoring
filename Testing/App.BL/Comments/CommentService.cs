@@ -1,6 +1,12 @@
 ﻿using System;
+using App.BL.Date.DateTimeProvider.DateTimeProviderInterface;
+using App.BL;
+using App.BL.Date.DateTimeProvider;
+using App.BL.Threads;
+using App.BL.Threads.ThreadInterfaces;
+using App.BL.Comments.CommentWrappers;
 
-namespace App.BL
+namespace App.BL.Comments
 {
 
     public class CommentService

@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace App.BL
+namespace App.BL.Comments.CommentWrappers
 {
     public interface ICommentStoreWrapper
     {

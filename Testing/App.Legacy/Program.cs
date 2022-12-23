@@ -1,6 +1,6 @@
 ﻿using System;
 using App.BL;
-
+using App.BL.Comments;
 namespace App.Legacy
 {
     // DO NOT CHANGE IT AT ALL

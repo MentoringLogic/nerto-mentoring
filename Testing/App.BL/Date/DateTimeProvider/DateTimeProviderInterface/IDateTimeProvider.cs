@@ -4,14 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace App.BL
+namespace App.BL.Date.DateTimeProvider.DateTimeProviderInterface
 {
     public interface IDateTimeProvider
     {
         public DateTime GetNow();
-    }   
-    public class DateTimeProvider : IDateTimeProvider
-    {
-        public DateTime GetNow() => DateTime.Now;
     }
 }

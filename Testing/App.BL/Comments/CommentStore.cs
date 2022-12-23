@@ -1,7 +1,7 @@
 ﻿using System.Data.SqlClient;
 using System.Configuration;
 
-namespace App.BL
+namespace App.BL.Comments
 {
     // DO NOT CHANGE STATIC
     public static class CommentStore 
