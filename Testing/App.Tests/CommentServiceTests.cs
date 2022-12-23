@@ -3,11 +3,11 @@ using NSubstitute;
 using System.Threading;
 using System;
 using System.Linq;
-using App.BL.Comments;
 using App.BL.Threads;
 using App.BL.Threads.ThreadInterfaces;
 using App.BL.Date.DateTimeProvider.DateTimeProviderInterface;
 using App.BL.Comments.CommentWrappers;
+using App.BL;
 
 namespace App.Tests
 {
