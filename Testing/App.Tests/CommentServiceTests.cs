@@ -49,16 +49,31 @@ namespace App.Tests
         {
             //Arrange
             Guid id = Guid.NewGuid();
-            //DateTime CreatedDate = new DateTime(2022, 12, 22, 12, 30, 00);
             CommentThread testThread = new CommentThread();
             threadRepository.GetById(id).Returns(testThread);
-            //Act
+
+            //Act 
+            var caughtException = Assert.Throws<ArgumentException>(() => sut.AddCommentToThread("", "Elon Musk", id));
 
             //Assert
-            var caughtException = Assert.Throws<ArgumentException>(() => sut.AddCommentToThread("", "Elon Musk", id));
             Assert.Equal("Comment cannot be null or empty", caughtException.Message);
         }
 
+        [Fact]
+        public void AddCommentToThread_NullString_Exception()
+        {
+            //Arrange
+            Guid id = Guid.NewGuid();
+            CommentThread testThread = new CommentThread();
+            threadRepository.GetById(id).Returns(testThread);
+            string commentText = null;
+            
+            //Act
+            var caughtException = Assert.Throws<ArgumentException>(() => sut.AddCommentToThread(commentText, "Elon Musk", id));
+
+            //Assert
+            Assert.Equal("Comment cannot be null or empty", caughtException.Message);
+        }
         [Fact]
         public void AddCommentToThread_NotSameDataTime_Exception()
         {
@@ -69,10 +84,11 @@ namespace App.Tests
 
             threadRepository.GetById(id).Returns(testThread);
             dateTimeProvider.GetNow().Returns(createdDate);
+
             //Act
+            var caughtException = Assert.Throws<ArgumentException>(() => sut.AddCommentToThread("Hello Guys", "Elon Musk", id));
 
             //Assert
-            var caughtException = Assert.Throws<ArgumentException>(() => sut.AddCommentToThread("Hello Guys", "Elon Musk", id));
             Assert.Equal("You cannot add comment to thread after 70 minutes of it creation", caughtException.Message);
         }
 
@@ -83,8 +99,10 @@ namespace App.Tests
             Guid id = Guid.NewGuid();
 
             threadRepository.GetById(id).Returns((CommentThread)null);
+
             //Act
             var result = sut.AddCommentToThread("Hello guys", "Elon Musk", id);
+
             //Assert
             Assert.False(result);
         }
@@ -101,6 +119,7 @@ namespace App.Tests
 
             //Act
             var result = sut.AddCommentToThread("Hello guys", "Elon Musk", id);
+
             //Assert
             Assert.False(result);
         }
