@@ -1,9 +1,28 @@
 ﻿using System;
+using App.BL.Date.DateTimeProvider.DateTimeProviderInterface;
+using App.BL.Date.DateTimeProvider;
+using App.BL.Threads;
+using App.BL.Threads.ThreadInterfaces;
+using App.BL.Comments.CommentWrappers;
+using App.BL.Comments;
 
 namespace App.BL
 {
     public class CommentService
     {
+        private ICommentStoreWrapper _commentWrapper;
+        private IThreadRepository _threadRepository;
+        private IDateTimeProvider _dateTimeProvider;
+        public CommentService() : this(new CommentStoreWrapper(), new ThreadRepository(), new DateTimeProvider())
+        {
+
+        }
+        public CommentService(ICommentStoreWrapper commentWrapper, IThreadRepository threadRepository, IDateTimeProvider dateTimeProvider)
+        {
+            _commentWrapper = commentWrapper;
+            _threadRepository = threadRepository;
+            _dateTimeProvider = dateTimeProvider;
+        }
         public bool AddCommentToThread(string commentText, string authorName, Guid threadId)
         {
             if (string.IsNullOrEmpty(commentText))
@@ -11,15 +30,14 @@ namespace App.BL
                 throw new ArgumentException("Comment cannot be null or empty");
             }
 
-            var repository = new ThreadRepository();
-            var thread = repository.GetById(threadId);
+            var thread = _threadRepository.GetById(threadId);  // It is going to load Substitute now
 
             if (thread == null)
             {
                 return false;
             }
 
-            var today = DateTime.Now;
+            DateTime today = _dateTimeProvider.GetNow();
             var timeSpan = today.Subtract(thread.Created);
             if (timeSpan.TotalMinutes > 70)
             {
@@ -31,7 +49,6 @@ namespace App.BL
                 return false;
             }
 
-
             var comment = new Comment()
             {
                 Id = Guid.NewGuid(),
@@ -42,7 +59,7 @@ namespace App.BL
                 Index = ++thread.LastCommentIndex,
             };
 
-            CommentStore.AddCommentToThread(comment);
+            _commentWrapper.AddCommentToThread(comment);
 
             return true;
         }

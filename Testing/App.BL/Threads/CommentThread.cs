@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace App.BL
+namespace App.BL.Threads
 {
     public class CommentThread
     {

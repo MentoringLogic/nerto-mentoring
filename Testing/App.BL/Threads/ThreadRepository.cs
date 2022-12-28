@@ -3,10 +3,11 @@ using System.Configuration;
 using System.Data.SqlClient;
 using System.Linq;
 using FastMember;
+using App.BL.Threads.ThreadInterfaces;
 
-namespace App.BL
+namespace App.BL.Threads
 {
-    public class ThreadRepository
+    public class ThreadRepository : IThreadRepository
     {
         public CommentThread GetById(Guid id)
         {

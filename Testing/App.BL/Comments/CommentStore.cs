@@ -1,10 +1,10 @@
 ﻿using System.Data.SqlClient;
 using System.Configuration;
 
-namespace App.BL
+namespace App.BL.Comments
 {
     // DO NOT CHANGE STATIC
-    public static class CommentStore
+    public static class CommentStore 
     {
         public static void AddCommentToThread(Comment comment)
         {
@@ -16,4 +16,5 @@ namespace App.BL
             new SqlCommand(query, sqlConnection).ExecuteNonQuery();
         }
     }
+    
 }

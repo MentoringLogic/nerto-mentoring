@@ -1,6 +1,5 @@
 ﻿using System;
 using App.BL;
-
 namespace App.Legacy
 {
     // DO NOT CHANGE IT AT ALL

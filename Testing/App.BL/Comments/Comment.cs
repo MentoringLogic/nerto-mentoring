@@ -1,6 +1,7 @@
 ﻿using System;
+using App.BL;
 
-namespace App.BL
+namespace App.BL.Comments
 {
     public class Comment
     {
