@@ -35,7 +35,7 @@ namespace App.Tests
             testThread.Created = createdDate;
 
             threadRepository.GetById(id).Returns(testThread);
-            dateTimeProvider.GetNow().Returns(createdDate);
+            dateTimeProvider.GetCurrentDateTime.Returns(createdDate);
 
             //Act
             var result = sut.AddCommentToThread("Hello guys", "Elon Musk", id);
@@ -83,7 +83,7 @@ namespace App.Tests
             CommentThread testThread = new CommentThread();
 
             threadRepository.GetById(id).Returns(testThread);
-            dateTimeProvider.GetNow().Returns(createdDate);
+            dateTimeProvider.GetCurrentDateTime.Returns(createdDate);
 
             //Act
             var caughtException = Assert.Throws<ArgumentException>(() => sut.AddCommentToThread("Hello Guys", "Elon Musk", id));

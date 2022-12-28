@@ -8,6 +8,16 @@ namespace App.BL.Date.DateTimeProvider.DateTimeProviderInterface
 {
     public interface IDateTimeProvider
     {
-        public DateTime GetNow();
+        public DateTime GetCurrentDateTime
+        {
+            get
+            {
+                return DateTime.Now;
+            }
+            set 
+            { 
+
+            }
+        }
     }
 }

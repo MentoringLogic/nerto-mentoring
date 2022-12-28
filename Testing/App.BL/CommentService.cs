@@ -37,7 +37,7 @@ namespace App.BL
                 return false;
             }
 
-            DateTime today = _dateTimeProvider.GetNow();
+            DateTime today = _dateTimeProvider.GetCurrentDateTime;
             var timeSpan = today.Subtract(thread.Created);
             if (timeSpan.TotalMinutes > 70)
             {

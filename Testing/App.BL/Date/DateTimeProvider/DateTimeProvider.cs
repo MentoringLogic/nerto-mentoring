@@ -10,6 +10,16 @@ namespace App.BL.Date.DateTimeProvider
 {
     public class DateTimeProvider : IDateTimeProvider
     {
-        public DateTime GetNow() => DateTime.Now;
+        public DateTime GetCurrentDateTime
+        {
+            get
+            {
+                return DateTime.Now;
+            }
+            set
+            {
+
+            }
+        }
     }
 }
